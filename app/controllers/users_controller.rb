@@ -56,7 +56,9 @@ class UsersController < ApplicationController
 
   private
     def user_params
-      params.require(:user).permit(:user_name, :email, :password, :password_confirmation)
+      params.permit(:name, :email, :password, :password_confirmation)
+      #  Might need to switch back to this to hookup react
+      # params.require(:user).permit(:user_name, :email, :password, :password_confirmation)
     end
 
   # def user_params
