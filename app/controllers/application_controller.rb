@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
 
+  #might want to remove line 4
   protect_from_forgery with: :null_session
 
   skip_before_action :verify_authenticity_token
