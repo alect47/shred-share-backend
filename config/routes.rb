@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   # resources :sessions, only: [:create]
 
   # post 'auth/register', to: 'users#register'
+  post '/login', to: 'sessions#create'
+  
   resources :users, only: [:create, :show, :index]
 
 
