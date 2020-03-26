@@ -9,5 +9,9 @@ class ApplicationController < ActionController::Base
   def login!
     session[:user_id] = @user.id
   end
-  
+
+  def logged_in?
+    !!session[:user_id]
+  end
+
 end
