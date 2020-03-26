@@ -41,7 +41,9 @@ class SessionsController < ApplicationController
 
 private
   def session_params
-      params.require(:user).permit(:username, :email, :password)
+      params.permit(:name, :email, :password)
+      # might need to change to get react to work
+      # params.require(:user).permit(:username, :email, :password)
   end
   # def create
   #   user = User
