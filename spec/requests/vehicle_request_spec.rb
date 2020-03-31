@@ -15,10 +15,17 @@ describe "Vehicle endpoints" do
 
     expect(response).to be_successful
     results = JSON.parse(response.body, symbolize_names: true)
+    # binding.pry
 
     expect(results).to be_a Hash
 
-    expect(results[:data][:attributes][:travel_time]).to eq("1 hour 48 mins")
+    # expect(results[:data][:attributes][:travel_time]).to eq("1 hour 48 mins")
+    #  Need to change response format to aligh with json
+    expect(results[:vehicle][:make]).to eq('Toyota')
+    expect(results[:vehicle][:model]).to eq('Tacoma')
+    expect(results[:vehicle][:year]).to eq('2007')
+    expect(results[:vehicle][:fourwd_or_awd]).to eq(false)
+    expect(results[:vehicle][:snow_tires]).to eq(false)
 
   end
 end
