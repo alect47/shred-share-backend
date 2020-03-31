@@ -6,7 +6,7 @@ class CreateVehicles < ActiveRecord::Migration[5.2]
       t.string :year
       t.integer :seats
       t.boolean :fourwd_or_awd, default: false
-      t.boolean :snow_tires
+      t.boolean :snow_tires, default: false
 
       t.references :user, foreign_key: true
 

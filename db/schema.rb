@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 2020_03_31_165528) do
     t.string "model"
     t.string "year"
     t.boolean "fourwd_or_awd", default: false
-    t.boolean "snow_tires"
+    t.boolean "snow_tires", default: false
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
