@@ -117,4 +117,27 @@ describe "Vehicle endpoints" do
     expect(results[:errors][0]).to eq('vehicle not found')
   end
 
+  it 'user can delete vehicle' do
+
+    delete '/user/vehicles/1'
+
+    expect(response).to be_successful
+    results = JSON.parse(response.body, symbolize_names: true)
+    expect(results).to be_a Hash
+
+    expect(results[:status]).to eq(204)
+  end
+
+  it 'user can only delete their own vehicle' do
+
+    delete '/user/vehicles/3'
+
+    expect(response).to be_successful
+    results = JSON.parse(response.body, symbolize_names: true)
+    expect(results).to be_a Hash
+
+    expect(results[:status]).to eq(500)
+    expect(results[:errors][0]).to eq('vehicle not found')
+  end
+
 end
