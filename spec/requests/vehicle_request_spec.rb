@@ -6,6 +6,7 @@ describe "Vehicle endpoints" do
     @user_2 = create(:user, email: 'user2@email.com')
     @vehicle_1 = @user.vehicles.create(make: 'toyota', model: 'carola', id: 1)
     @vehicle_2 = @user.vehicles.create(make: 'toyota', model: 'tacoma')
+    @vehicle_3 = @user_2.vehicles.create(make: 'toyota', model: 'tacoma')
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
   end
@@ -41,7 +42,7 @@ describe "Vehicle endpoints" do
 
     expect(results).to be_a Hash
 
-    expect(results[:vehicles].count).to eq(2)
+    expect(results[:vehicles].count).to eq(3)
     expect(results[:vehicles][0][:make]).to eq('toyota')
     expect(results[:vehicles][0][:model]).to eq('carola')
   end
@@ -70,4 +71,18 @@ describe "Vehicle endpoints" do
     expect(results[:status]).to eq(500)
     expect(results[:errors][0]).to eq('vehicle not found')
   end
+
+  it 'user can view their vehicles' do
+
+    get '/user/vehicles'
+
+    expect(response).to be_successful
+    results = JSON.parse(response.body, symbolize_names: true)
+    expect(results).to be_a Hash
+
+    expect(results[:vehicles].count).to eq(2)
+    expect(results[:vehicles][0][:make]).to eq('toyota')
+    expect(results[:vehicles][0][:model]).to eq('carola')
+  end
+
 end
