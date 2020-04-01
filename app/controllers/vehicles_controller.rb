@@ -14,12 +14,12 @@ class VehiclesController < ApplicationController
     @vehicles ? (render json: { vehicles: @vehicles }) :
       (render json: {status: 500, errors: ['no vehicles found']})
   end
-  #
-  # def show
-  #   @user = User.find_by(id: params[:id])
-  #   @user ? (render json: { user: @user }) :
-  #     (render json: { status: 500, errors: ['user not found']})
-  # end
+  
+  def show
+    @vehicle = Vehicle.find_by(id: params[:id])
+    @vehicle ? (render json: { vehicle: @vehicle }) :
+      (render json: { status: 500, errors: ['vehicle not found']})
+  end
 
   # Is this actually any more readable? Looks kinda gross
 
