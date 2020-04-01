@@ -4,8 +4,8 @@ describe "Vehicle endpoints" do
   before(:each) do
     @user = create(:user, email: 'user@email.com')
     @user_2 = create(:user, email: 'user2@email.com')
-    @vehicle_1 = @user.vehicles.create(make: 'toyota', model: 'carola')
-    @vehicle_2 = @user.vehicles.create(make: 'toyota', model: 'carola')
+    @vehicle_1 = @user.vehicles.create(make: 'toyota', model: 'carola', id: 1)
+    @vehicle_2 = @user.vehicles.create(make: 'toyota', model: 'tacoma')
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
   end
@@ -46,5 +46,19 @@ describe "Vehicle endpoints" do
     expect(results[:vehicles].count).to eq(2)
     expect(results[:vehicles][0][:make]).to eq('toyota')
     expect(results[:vehicles][0][:model]).to eq('carola')
+  end
+
+  it 'user GET vehicle show' do
+
+    get '/vehicles/1'
+
+    expect(response).to be_successful
+    results = JSON.parse(response.body, symbolize_names: true)
+    # binding.pry
+
+    expect(results).to be_a Hash
+
+    expect(results[:vehicle][:make]).to eq('toyota')
+    expect(results[:vehicle][:model]).to eq('carola')
   end
 end
