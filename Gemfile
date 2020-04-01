@@ -38,6 +38,7 @@ gem 'autoprefixer-rails'
 gem 'bootstrap-sass'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
+gem 'fast_jsonapi'
 gem 'faraday'
 gem 'figaro'
 gem 'faker'
@@ -60,6 +61,8 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'selenium-webdriver'
   gem 'rspec_junit_formatter'
+  gem 'vcr'
+  gem 'webmock'
 end
 
 group :development do

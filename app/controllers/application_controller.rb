@@ -7,6 +7,10 @@ class ApplicationController < ActionController::Base
 
   helper_method :login!, :logged_in?, :current_user, :authorized_user?, :logout!
 
+  def json_parse(json)
+    JSON.parse(json.body.read, symbolize_names: true, quirks_mode: true)
+  end
+  
   def login!
     session[:user_id] = @user.id
   end
