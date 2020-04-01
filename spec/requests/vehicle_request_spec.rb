@@ -6,7 +6,7 @@ describe "Vehicle endpoints" do
     @user_2 = create(:user, email: 'user2@email.com')
     @vehicle_1 = @user.vehicles.create(make: 'toyota', model: 'carola', id: 1)
     @vehicle_2 = @user.vehicles.create(make: 'toyota', model: 'tacoma')
-    @vehicle_3 = @user_2.vehicles.create(make: 'toyota', model: 'tacoma')
+    @vehicle_3 = @user_2.vehicles.create(make: 'toyota', model: 'tacoma', id: 3)
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
   end
@@ -83,6 +83,38 @@ describe "Vehicle endpoints" do
     expect(results[:vehicles].count).to eq(2)
     expect(results[:vehicles][0][:make]).to eq('toyota')
     expect(results[:vehicles][0][:model]).to eq('carola')
+  end
+
+  it 'user can update their vehicles' do
+
+    vehicle_info = '{"make": "Toyota", "model": "Tacoma", "year": "2007"}'
+    headers = {'Content-Type': 'application/json', 'Accept': 'application/json'}
+
+    patch '/user/vehicles/1', params: vehicle_info, headers: headers
+
+    expect(response).to be_successful
+    results = JSON.parse(response.body, symbolize_names: true)
+    expect(results).to be_a Hash
+
+
+    expect(results[:vehicle][:make]).to eq('Toyota')
+    expect(results[:vehicle][:model]).to eq('Tacoma')
+    expect(results[:vehicle][:year]).to eq('2007')
+  end
+
+  it 'user tries to update wrong vehicle' do
+
+    vehicle_info = '{"make": "Toyota", "model": "Tacoma", "year": "2007"}'
+    headers = {'Content-Type': 'application/json', 'Accept': 'application/json'}
+
+    patch '/user/vehicles/3', params: vehicle_info, headers: headers
+
+    expect(response).to be_successful
+    results = JSON.parse(response.body, symbolize_names: true)
+    expect(results).to be_a Hash
+
+    expect(results[:status]).to eq(500)
+    expect(results[:errors][0]).to eq('vehicle not found')
   end
 
 end
