@@ -43,11 +43,8 @@ describe "Vehicle endpoints" do
 
     expect(results).to be_a Hash
 
-    expect(results[:vehicle][:make]).to eq('Toyota')
-    expect(results[:vehicle][:model]).to eq('Tacoma')
-    expect(results[:vehicle][:year]).to eq('2007')
-    expect(results[:vehicle][:fourwd_or_awd]).to eq(false)
-    expect(results[:vehicle][:snow_tires]).to eq(false)
-
+    expect(results[:vehicles].count).to eq(2)
+    expect(results[:vehicles][0][:make]).to eq('toyota')
+    expect(results[:vehicles][0][:model]).to eq('carola')
   end
 end
