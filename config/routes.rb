@@ -10,5 +10,9 @@ Rails.application.routes.draw do
   resources :users, only: [:create, :show, :index]
   resources :vehicles, only: [:create, :index, :show]
 
+  namespace :user do
+    resources :vehicles, only: [:index]
+  end
+
 
 end
