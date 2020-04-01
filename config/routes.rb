@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   get '/logged_in', to: 'sessions#is_logged_in?'
 
   resources :users, only: [:create, :show, :index]
-  resources :vehicles, only: [:create, :index]
+  resources :vehicles, only: [:create, :index, :show]
 
 
 end
