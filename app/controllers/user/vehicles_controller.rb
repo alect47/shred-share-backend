@@ -1,11 +1,18 @@
 class User::VehiclesController < ApplicationController
   # before_action :require_verified_user
-  # before_action :check_user_teams, except: [:index, :new, :create]
+  before_action :check_user_vehicles, except: [:index, :new, :create]
+
   def index
     @vehicles = current_user.vehicles
     # binding.pry
     @vehicles ? (render json: { vehicles: @vehicles }) :
       (render json: {status: 500, errors: ['no vehicles found']})
+  end
+
+  def update
+    vehicle = current_user.vehicles.find(params[:id])
+    vehicle.update(vehicle_params) ? (render json: { status: :updated, vehicle: vehicle}) :
+      (render json: {status: 500, errors: vehicle.errors.full_messages})
   end
 
   # def show
@@ -56,19 +63,18 @@ class User::VehiclesController < ApplicationController
 
   private
 
-  # def team_params
-  #   params.require(:team).permit(:name)
-  # end
+  def vehicle_params
+    params.require(:vehicle).permit(:make, :model, :year, :fourwd_or_awd, :snow_tires)
+  end
   #
   # def team_player_params
   #   params.permit(:team_player, :benched)
   # end
   #
-  # def check_user_teams
-  #   team = Team.find(params[:id])
-  #   unless current_user.teams.include?(team)
-  #     flash[:error] = "Forbidden"
-  #     redirect_to user_teams_path
-  #   end
-  # end
+  def check_user_vehicles
+    vehicle = Vehicle.find(params[:id])
+    unless current_user.vehicles.include?(vehicle)
+      render json: { status: 500, errors: ['vehicle not found']}
+    end
+  end
 end
