@@ -15,6 +15,12 @@ class User::VehiclesController < ApplicationController
       (render json: {status: 500, errors: vehicle.errors.full_messages})
   end
 
+  def destroy
+    vehicle = current_user.vehicles.find(params[:id])
+    vehicle.destroy
+    render json: { status: 204 }
+  end
+
   # def show
   #   @team = current_user.teams.find_by_id(params[:id].to_i)
   #   if team_player_params[:benched]
@@ -54,12 +60,6 @@ class User::VehiclesController < ApplicationController
   #   end
   # end
   #
-  # def destroy
-  #   team = current_user.teams.find(params[:id])
-  #   team.destroy
-  #   flash[:success] = "Team deleted!"
-  #   redirect_to user_teams_path
-  # end
 
   private
 
