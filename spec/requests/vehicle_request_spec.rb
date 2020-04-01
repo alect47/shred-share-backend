@@ -19,7 +19,6 @@ describe "Vehicle endpoints" do
 
     expect(response).to be_successful
     results = JSON.parse(response.body, symbolize_names: true)
-    # binding.pry
 
     expect(results).to be_a Hash
 
@@ -39,7 +38,6 @@ describe "Vehicle endpoints" do
 
     expect(response).to be_successful
     results = JSON.parse(response.body, symbolize_names: true)
-    # binding.pry
 
     expect(results).to be_a Hash
 
@@ -54,11 +52,22 @@ describe "Vehicle endpoints" do
 
     expect(response).to be_successful
     results = JSON.parse(response.body, symbolize_names: true)
-    # binding.pry
 
     expect(results).to be_a Hash
 
     expect(results[:vehicle][:make]).to eq('toyota')
     expect(results[:vehicle][:model]).to eq('carola')
+  end
+
+  it 'user GET vehicle show invalid id' do
+
+    get '/vehicles/100'
+
+    expect(response).to be_successful
+    results = JSON.parse(response.body, symbolize_names: true)
+    expect(results).to be_a Hash
+
+    expect(results[:status]).to eq(500)
+    expect(results[:errors][0]).to eq('vehicle not found')
   end
 end
