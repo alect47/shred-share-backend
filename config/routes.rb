@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   resources :vehicles, only: [:create, :index, :show]
 
   namespace :user do
-    resources :vehicles, only: [:index]
+    resources :vehicles, only: [:index, :update]
   end
 
 
