@@ -1,10 +1,7 @@
 class VehiclesController < ApplicationController
 
   def create
-    # binding.pry
     @user = current_user
-    #  might not need this, can probably make private params
-    vehicle_params = json_parse(request)
     if @user
       @vehicle = @user.vehicles.create(vehicle_params)
       @vehicle.save ? (render json: { status: :created, vehicle: @vehicle}) :
@@ -26,8 +23,8 @@ class VehiclesController < ApplicationController
 
   # Is this actually any more readable? Looks kinda gross
 
-  private
-    # def vehicle_params
-    #   params.require(:vehicle).permit(:make, :model, :year, :fourwd_or_awd, :snow_tires)
-    # end
+private
+    def vehicle_params
+      params.require(:vehicle).permit(:make, :model, :year, :fourwd_or_awd, :snow_tires)
+    end
 end
