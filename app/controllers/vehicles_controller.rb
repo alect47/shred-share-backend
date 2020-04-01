@@ -9,11 +9,11 @@ class VehiclesController < ApplicationController
     end
   end
 
-  # def index
-  #   @users = User.all
-  #   @users ? (render json: { users: @users }) :
-  #     (render json: {status: 500, errors: ['no users found']})
-  # end
+  def index
+    @vehicles = Vehicle.all
+    @vehicles ? (render json: { vehicles: @vehicles }) :
+      (render json: {status: 500, errors: ['no vehicles found']})
+  end
   #
   # def show
   #   @user = User.find_by(id: params[:id])
