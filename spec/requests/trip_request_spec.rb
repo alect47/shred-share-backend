@@ -50,7 +50,8 @@ describe "Vehicle endpoints" do
 
   end
 
-  it 'user can GET their trips' do
+  it 'user has no trips' do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user_2)
 
     get '/user/trips'
 
@@ -58,13 +59,10 @@ describe "Vehicle endpoints" do
     results = JSON.parse(response.body, symbolize_names: true)
 
     expect(results).to be_a Hash
-
     # expect(results[:data][:attributes][:travel_time]).to eq("1 hour 48 mins")
     #  Need to change response format to aligh with json
-    expect(results[:trips].count).to eq(2)
-    expect(results[:trips][0][:origin]).to eq('Denver, CO')
-    expect(results[:trips][0][:destination]).to eq('Salida, CO')
-    expect(results[:trips][0][:round_trip]).to eq(true)
+    expect(results[:status]).to eq(404)
+    expect(results[:errors][0]).to eq('no trips found')
 
   end
 end
