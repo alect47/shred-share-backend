@@ -7,13 +7,12 @@ class User::TripsController < ApplicationController
   # end
 
   def create
-    # binding.pry
     @user = current_user
     @vehicle = Vehicle.find_by(id: vehicle_params[:vehicle_id])
     if @user
       @trip = @user.trips.create(trip_params)
       num_times = seat_params[:num_seats].to_i
-      # @trip.seats.create
+
       if @trip.save
         num_times.times { @trip.seats.create }
         render json: { status: :created, trip: @trip, seats: @trip.seats }

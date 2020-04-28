@@ -59,8 +59,7 @@ describe "Vehicle endpoints" do
     results = JSON.parse(response.body, symbolize_names: true)
 
     expect(results).to be_a Hash
-    # expect(results[:data][:attributes][:travel_time]).to eq("1 hour 48 mins")
-    #  Need to change response format to aligh with json
+
     expect(results[:status]).to eq(404)
     expect(results[:errors][0]).to eq('no trips found')
 
