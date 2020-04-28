@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   namespace :user do
     resources :vehicles, only: [:index, :update, :destroy]
-    resources :trips, only: [:create]
+    resources :trips, only: [:create, :index]
   end
 
 end
