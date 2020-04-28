@@ -10,16 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_09_180603) do
+ActiveRecord::Schema.define(version: 2020_04_09_233731) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "seats", force: :cascade do |t|
-    t.bigint "vehicle_id"
+    t.bigint "trip_id"
+    t.index ["trip_id"], name: "index_seats_on_trip_id"
+  end
+
+  create_table "trips", force: :cascade do |t|
+    t.string "origin"
+    t.string "destination"
+    t.boolean "round_trip", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["vehicle_id"], name: "index_seats_on_vehicle_id"
+  end
+
+  create_table "user_trips", force: :cascade do |t|
+    t.integer "user_role", default: 0
+    t.bigint "user_id"
+    t.bigint "trip_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["trip_id"], name: "index_user_trips_on_trip_id"
+    t.index ["user_id"], name: "index_user_trips_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -45,6 +61,8 @@ ActiveRecord::Schema.define(version: 2020_04_09_180603) do
     t.index ["user_id"], name: "index_vehicles_on_user_id"
   end
 
-  add_foreign_key "seats", "vehicles"
+  add_foreign_key "seats", "trips"
+  add_foreign_key "user_trips", "trips"
+  add_foreign_key "user_trips", "users"
   add_foreign_key "vehicles", "users"
 end

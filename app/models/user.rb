@@ -2,6 +2,8 @@ class User < ApplicationRecord
 #encrypt password
   has_secure_password
   has_many :vehicles, dependent: :destroy
+  has_many :user_trips, dependent: :destroy
+  has_many :trips, through: :user_trips
 
   validates_presence_of :email, :name, :password_digest
   validates_uniqueness_of :email
