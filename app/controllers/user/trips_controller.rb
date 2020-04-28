@@ -26,9 +26,9 @@ class User::TripsController < ApplicationController
 
     def index
       @trips = current_user.trips
-      # binding.pry
-      @trips ? (render json: { trips: @trips }) :
-        (render json: {status: 500, errors: ['no trips found']})
+
+      !@trips.empty? ? (render json: { trips: @trips }) :
+        (render json: {status: 404, errors: ['no trips found']})
     end
 
     # team = current_user.teams.create(team_params)
